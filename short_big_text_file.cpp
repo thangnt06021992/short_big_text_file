@@ -22,8 +22,8 @@ using namespace std;
 // Path file save input value of user
 namespace
 {
-	std::string     inputFilePath,
-                    outputFilePath;
+	std::string   	inputFilePath,
+	  		outputFilePath;
 
 }
 
@@ -99,8 +99,8 @@ bool compareStringsIterator(const string & it1, const string & it2)
 	{
 		if (*itStringOne == *itStringTwo)
 		{
-		    itStringOne++;
-		    itStringTwo++;
+		    	itStringOne++;
+		    	itStringTwo++;
 			continue; // defaule value of result is zero, not need set for it
 		}
 		else if (*itStringOne > *itStringTwo)
@@ -132,11 +132,12 @@ bool fillToTemporaryFile(vector<string> & listString, string & temporaryFileName
 {
 	fstream temporaryOutputFile;
 	temporaryOutputFile.open(temporaryFileName, ios::out | ios::trunc);
-    if (temporaryOutputFile.fail())
+
+	if (temporaryOutputFile.fail())
 	{
 		cerr << "error occured when open temporary text file" << endl;
 		exit(1);
-    }
+    	}
 
 	if (listString.size() == 0) {
 		temporaryOutputFile.close();
@@ -144,10 +145,11 @@ bool fillToTemporaryFile(vector<string> & listString, string & temporaryFileName
 	}
 
 	vector<string>::iterator it = listString.begin();
-    for (; it <= listString.end(); it++)
-    {
-        temporaryOutputFile << *it << endl;
-    }
+
+	for (; it <= listString.end(); it++)
+    	{
+        	temporaryOutputFile << *it << endl;
+    	}
 	temporaryOutputFile.close();
 	return true;
 }
@@ -155,12 +157,13 @@ bool fillToTemporaryFile(vector<string> & listString, string & temporaryFileName
 unsigned int firstSortHandle(fstream & inputFile, uint64_t memory_space /* use byte */)
 {
 	string line, temporaryFileName;
-    SortHandle sortHandle;
+    	SortHandle sortHandle;
 	uint64_t currentMemSpace = memory_space;
 	unsigned int temFileNum = 1;
-    while (getline(inputFile, line))
-    {
-        temporaryFileName = "";
+
+	while (getline(inputFile, line))
+    	{
+        	temporaryFileName = "";
 		if(currentMemSpace < sizeof(char)*line.size()) {
 			temporaryFileName = temporaryFileName + TEM_FILE + "_1_" + to_string(temFileNum);
 			temFileNum++;
@@ -172,19 +175,20 @@ unsigned int firstSortHandle(fstream & inputFile, uint64_t memory_space /* use b
 			sortHandle.strings.shrink_to_fit();
 			currentMemSpace = memory_space;
 		}
-        sortHandle.strings.push_back(line);
+        	sortHandle.strings.push_back(line);
 		currentMemSpace -= sizeof(char)*line.size();
-    }
+    	}
 
 	sortHandle.quickSortStrings();
 
 	if(temFileNum == 1)
-    {
-        temporaryFileName = outputFilePath;
-    }
-    else {
-        temporaryFileName = temporaryFileName + TEM_FILE + "_1_" +  to_string(temFileNum);
-    }
+    	{
+       	 	temporaryFileName = outputFilePath;
+    	}
+    	else 
+	{
+        	temporaryFileName = temporaryFileName + TEM_FILE + "_1_" +  to_string(temFileNum);
+    	}
 
 	if (!fillToTemporaryFile(sortHandle.strings, temporaryFileName))
 		temFileNum--;
@@ -214,8 +218,8 @@ void N_WayMergeSortHandle( unsigned int numTemporaryFile, unsigned int deepRecur
 			string pathOldFile, pathNewFile;
 			pathOldFile = pathOldFile + TEM_FILE + "_" + to_string(deepRecurse) + "_" + to_string(++fileInputIndex);
 			pathNewFile = pathNewFile + TEM_FILE + "_" + to_string(deepRecurse+1) + "_" + to_string(++fileOutputIndex);
-            cout << "old name : " << pathOldFile << endl;
-            cout << "new name : " << pathNewFile << endl;
+        		cout << "old name : " << pathOldFile << endl;
+            		cout << "new name : " << pathNewFile << endl;
 			if (rename(pathOldFile.c_str(), pathNewFile.c_str()))
 			{
 				cerr << "error occured when rename file name" << endl;
@@ -228,8 +232,8 @@ void N_WayMergeSortHandle( unsigned int numTemporaryFile, unsigned int deepRecur
 		string pathFileOne , pathFileTwo;
  		pathFileOne = pathFileOne + TEM_FILE + "_" + to_string(deepRecurse) + "_" + to_string(++fileInputIndex);
 		pathFileTwo = pathFileTwo +  TEM_FILE + "_" + to_string(deepRecurse) + "_" + to_string(++fileInputIndex);
-        cout << pathFileOne << endl;
-        cout << pathFileTwo << endl;
+        	cout << pathFileOne << endl;
+        	cout << pathFileTwo << endl;
 
 		/* If just have two file, process and write to output file input by user*/
 		if (numTemporaryFile == 2)
@@ -374,11 +378,7 @@ int main (int argc, char * argv[])
         N_WayMergeSortHandle(numTemOutputFile);
     }
 
-
-	exit(0);
-
-
-
+    exit(0);
 }
 
 
