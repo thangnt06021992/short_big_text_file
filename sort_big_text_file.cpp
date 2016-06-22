@@ -70,7 +70,7 @@ int SortHandle::compareStrings(string & string1, string & string2)
 		{
 		    itStringOne++;
 		    itStringTwo++;
-			continue; // defaule value of result is zero, not need set for it
+		    continue; // defaule value of result is zero, not need set for it
 		}
 		else if (*itStringOne > *itStringTwo)
 		{
@@ -247,7 +247,6 @@ void N_WayMergeSortHandle( unsigned int numTemporaryFile, unsigned int deepRecur
 			string outputTemporaryFile;
 		 	outputTemporaryFile = outputTemporaryFile + TEM_FILE + "_" + to_string(deepRecurse + 1) + "_" + to_string(++fileOutputIndex);
 		 	cout << outputTemporaryFile << endl;
-			//std::thread(mergeSortTwoFile, pathFileOne, pathFileTwo, &outputTemporaryFile).join();
 			mergeSortTwoFile(pathFileOne, pathFileTwo, outputTemporaryFile);
 
 		}
@@ -369,16 +368,17 @@ int main (int argc, char * argv[])
 		cerr << "Memory you require is invalue" << endl;
 		exit(0);
 	}
-    cout << space_memory_buf*1024*1024 << endl;
+	
+        cout << space_memory_buf*1024*1024 << endl;
 	// Using 100% memory space for fist sort
 	unsigned int numTemOutputFile = firstSortHandle (inputFile, space_memory_buf*1024*1024);
 	// N-Way merge sort
-    if (numTemOutputFile > 1)
-    {
-        N_WayMergeSortHandle(numTemOutputFile);
-    }
+	if (numTemOutputFile > 1)
+	{
+		N_WayMergeSortHandle(numTemOutputFile);
+	}
 
-    exit(0);
+	exit(0);
 }
 
 
